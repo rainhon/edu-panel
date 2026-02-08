@@ -48,7 +48,3 @@ src/
 ├── views/         # 页面
 └── main.js        # 入口
 ```
-
-## 部署
-
-项目部署在 Heroku: https://poper-ops-interview-04.herokuapp.com
