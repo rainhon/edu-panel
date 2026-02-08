@@ -10,8 +10,8 @@
 
       <el-descriptions :column="2" border v-if="invoice">
         <el-descriptions-item label="账单ID">{{ invoice.id }}</el-descriptions-item>
-        <el-descriptions-item label="学生姓名">{{ invoice.student_name }}</el-descriptions-item>
-        <el-descriptions-item label="课程名称">{{ invoice.course_name }}</el-descriptions-item>
+        <el-descriptions-item label="学生姓名">{{ invoice.student?.name || invoice.student_name || '-' }}</el-descriptions-item>
+        <el-descriptions-item label="课程名称">{{ invoice.course?.name || invoice.course_name || '-' }}</el-descriptions-item>
         <el-descriptions-item label="金额">¥{{ invoice.amount }}</el-descriptions-item>
         <el-descriptions-item label="账单月份">{{ invoice.billing_month }}</el-descriptions-item>
         <el-descriptions-item label="到期日期">{{ invoice.due_date }}</el-descriptions-item>

@@ -13,8 +13,16 @@
 
       <el-table :data="invoices" :loading="loading" stripe>
         <el-table-column prop="id" label="ID" width="80" />
-        <el-table-column prop="student_name" label="学生姓名" />
-        <el-table-column prop="course_name" label="课程名称" />
+        <el-table-column label="学生姓名">
+          <template #default="{ row }">
+            {{ row.student?.name || row.student_name || '-' }}
+          </template>
+        </el-table-column>
+        <el-table-column label="课程名称">
+          <template #default="{ row }">
+            {{ row.course?.name || row.course_name || '-' }}
+          </template>
+        </el-table-column>
         <el-table-column prop="amount" label="金额" width="100">
           <template #default="{ row }">
             ¥{{ row.amount }}

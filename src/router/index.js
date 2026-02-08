@@ -106,6 +106,11 @@ const routes = [
         path: 'invoices/:id/pay',
         name: 'StudentInvoicePay',
         component: () => import('@/views/student/invoices/PaymentView.vue')
+      },
+      {
+        path: 'invoices/:id/pay/omise',
+        name: 'StudentInvoiceOmisePay',
+        component: () => import('@/views/student/invoices/OmisePaymentView.vue')
       }
     ]
   },

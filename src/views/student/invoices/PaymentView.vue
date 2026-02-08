@@ -10,12 +10,47 @@
 
       <el-descriptions :column="2" border v-if="invoice" class="mb-20">
         <el-descriptions-item label="账单ID">{{ invoice.id }}</el-descriptions-item>
-        <el-descriptions-item label="课程名称">{{ invoice.course_name }}</el-descriptions-item>
+        <el-descriptions-item label="课程名称">
+          {{ invoice.course?.name || invoice.course_name || '-' }}
+        </el-descriptions-item>
         <el-descriptions-item label="应付金额">¥{{ invoice.amount }}</el-descriptions-item>
         <el-descriptions-item label="账单月份">{{ invoice.billing_month }}</el-descriptions-item>
       </el-descriptions>
 
+      <!-- 支付方式选择 -->
+      <el-alert
+        title="选择支付方式"
+        type="info"
+        :closable="false"
+        show-icon
+        class="mb-20"
+      >
+        <template #default>
+          <el-radio-group v-model="selectedPaymentMethod" @change="handlePaymentMethodChange">
+            <el-radio-button label="omise">信用卡支付</el-radio-button>
+            <el-radio-button label="manual">线下支付</el-radio-button>
+          </el-radio-group>
+        </template>
+      </el-alert>
+
+      <!-- Omise 信用卡支付 -->
+      <div v-if="selectedPaymentMethod === 'omise'" class="omise-section">
+        <el-result
+          icon="success"
+          title="安全支付"
+          sub-title="使用 Omise 安全支付网关，支持 Visa、Mastercard 等主流信用卡"
+        >
+          <template #extra>
+            <el-button type="primary" size="large" @click="goToOmisePayment">
+              前往信用卡支付
+            </el-button>
+          </template>
+        </el-result>
+      </div>
+
+      <!-- 线下支付表单 -->
       <el-form
+        v-else
         ref="formRef"
         :model="formData"
         :rules="rules"
@@ -73,6 +108,7 @@ const invoiceStore = useStudentInvoiceStore()
 const formRef = ref()
 const loading = ref(false)
 const invoiceId = route.params.id
+const selectedPaymentMethod = ref('omise') // 默认选择 Omise 支付
 
 const invoice = computed(() => invoiceStore.currentInvoice)
 
@@ -98,6 +134,14 @@ onMounted(async () => {
     formData.amount = invoice.value.amount
   }
 })
+
+const handlePaymentMethodChange = (method) => {
+  console.log('Payment method changed:', method)
+}
+
+const goToOmisePayment = () => {
+  router.push(`/student/invoices/${invoiceId}/pay/omise`)
+}
 
 const handleSubmit = async () => {
   try {
@@ -147,5 +191,9 @@ const handleBack = () => {
 
 .mb-20 {
   margin-bottom: 20px;
+}
+
+.omise-section {
+  padding: 20px;
 }
 </style>

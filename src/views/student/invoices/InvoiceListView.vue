@@ -7,7 +7,11 @@
 
       <el-table :data="invoices" :loading="loading" stripe>
         <el-table-column prop="id" label="账单ID" width="80" />
-        <el-table-column prop="course_name" label="课程名称" />
+        <el-table-column label="课程名称">
+          <template #default="{ row }">
+            {{ row.course?.name || row.course_name || '-' }}
+          </template>
+        </el-table-column>
         <el-table-column prop="amount" label="金额" width="100">
           <template #default="{ row }">
             ¥{{ row.amount }}
@@ -22,7 +26,7 @@
             </el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="150" fixed="right">
+        <el-table-column label="操作" width="200" fixed="right">
           <template #default="{ row }">
             <el-button type="primary" size="small" @click="handleView(row)">
               查看
@@ -33,7 +37,7 @@
               size="small"
               @click="handlePay(row)"
             >
-              支付
+              立即支付
             </el-button>
           </template>
         </el-table-column>
