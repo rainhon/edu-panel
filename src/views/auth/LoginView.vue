@@ -47,7 +47,7 @@
       </el-form>
 
       <div class="tips">
-        <p>测试账号：</p>
+        <p>测试账号：(密码admin888)</p>
         <p>教师：teacher@example.com</p>
         <p>学生：student@example.com</p>
       </div>
