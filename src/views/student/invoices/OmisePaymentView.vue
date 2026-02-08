@@ -14,7 +14,7 @@
         <el-descriptions-item label="课程名称">
           {{ invoice.course?.name || invoice.course_name || '-' }}
         </el-descriptions-item>
-        <el-descriptions-item label="应付金额">¥{{ invoice.amount }}</el-descriptions-item>
+        <el-descriptions-item label="应付金额">¥{{ invoice.amount }} (JPY)</el-descriptions-item>
         <el-descriptions-item label="账单月份">{{ invoice.billing_month }}</el-descriptions-item>
       </el-descriptions>
 
@@ -27,6 +27,7 @@
       >
         <template #default>
           <p>• 使用 Omise 安全支付网关，支持 Visa、Mastercard 等主流信用卡</p>
+          <p>• 支付货币：日元（JPY）</p>
           <p>• 测试模式：卡号 4242 4242 4242 4242，过期日期任意未来日期，安全码任意3位数字</p>
         </template>
       </el-alert>
@@ -41,12 +42,12 @@
         <el-form-item label="支付金额" prop="amount">
           <el-input-number
             v-model="formData.amount"
-            :precision="2"
+            :precision="0"
             :min="0"
             :max="invoice?.amount || 999999"
             :disabled="loading"
           />
-          <span class="unit">元</span>
+          <span class="unit">日元 (JPY)</span>
         </el-form-item>
 
         <el-divider content-position="left">信用卡信息</el-divider>
@@ -128,7 +129,7 @@
               处理中...
             </template>
             <template v-else>
-              确认支付 ¥{{ formData.amount }}
+              确认支付 ¥{{ formData.amount }} (JPY)
             </template>
           </el-button>
           <el-button @click="handleCancel" size="large" :disabled="loading">取消</el-button>
